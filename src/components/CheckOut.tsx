@@ -1,7 +1,10 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 import CartContext from "../contexts/CartContext";
+import { AddCustomerForm } from "./customers/AddCustomerForm";
+import { ICustomer } from "../models/ICustomer";
+import { useCustomers } from "../hooks/useCustomers";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -11,6 +14,9 @@ const stripePromise = loadStripe(
 
 export const Checkout = () => {
   const { cart } = useContext(CartContext);
+  const { getCustomerByEmail } = useCustomers();
+  const [isValidated, setIsValidated] = useState(false);
+  const [customer, setCustomer] = useState<ICustomer>();
 
   const fetchClientSecret = useCallback(() => {
     // Create a Checkout Session
@@ -26,10 +32,37 @@ export const Checkout = () => {
   const options = { fetchClientSecret };
 
   return (
-    <div id='checkout'>
-      <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
-        <EmbeddedCheckout />
-      </EmbeddedCheckoutProvider>
+    <div className='space-y-4 p-4'>
+      <h2 className='text-4xl text-center font-bold'>Checkout</h2>
+      <p>
+        If you have an accout you can fetch your information by entering your email address. If you don't have an
+        account, please fill in the form below.
+        {customer?.firstname}
+      </p>
+      <input
+        type='email'
+        placeholder='example@mail.com'
+        className='ring p-2 rounded'
+        onChange={(e) => {
+          getCustomerByEmail(e.target.value).then((res) => {
+            if (res) {
+              setCustomer(res);
+              setIsValidated(true);
+            } else {
+              setIsValidated(false);
+            }
+          });
+        }}
+      />
+      <AddCustomerForm customer={customer} setIsValidated={setIsValidated} />
+
+      {isValidated && (
+        <div id='checkout'>
+          <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
+        </div>
+      )}
     </div>
   );
 };

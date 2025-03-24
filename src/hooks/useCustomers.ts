@@ -6,6 +6,7 @@ import {
   getCustomerByIdFromApi,
   updateCustomerById,
   createCustomer,
+  getCustomerByEmailFromApi,
 } from "../services/customerServices";
 
 export const useCustomers = () => {
@@ -62,6 +63,17 @@ export const useCustomers = () => {
       handleError(error);
     }
   };
+  const getCustomerByEmail = async (mail: string): Promise<ICustomer | undefined> => {
+    try {
+      const response: ICustomer | undefined = await getCustomerByEmailFromApi(mail);
+      if (!response) {
+        throw new Error(`Customer with id ${mail} not found`);
+      }
+      return response;
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
   const createNewCustomer = async (customer: ICustomer) => {
     try {
@@ -100,5 +112,6 @@ export const useCustomers = () => {
     getCustomerById,
     updateCustomer,
     createNewCustomer,
+    getCustomerByEmail,
   };
 };

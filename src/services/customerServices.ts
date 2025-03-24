@@ -11,6 +11,10 @@ export const getCustomerByIdFromApi = async (id: number) => {
   const response: ICustomer = await get(`${baseUrl}/${id}`);
   return response;
 };
+export const getCustomerByEmailFromApi = async (mail: string) => {
+  const response: ICustomer = await get(`${baseUrl}/email/${mail}`);
+  return response;
+};
 
 export const createCustomer = async (customer: ICustomer) => {
   await post(baseUrl, customer);

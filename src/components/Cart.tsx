@@ -29,7 +29,7 @@ export const Cart = () => {
                 </button>
               </Link>
             </div>
-            <div className='grid grid-cols-4 gap-y-8 divide-y text-center items-end '>
+            <div className='flex flex-col items-center md:grid md:grid-cols-4 gap-y-8 divide-y text-center md:items-end '>
               {cart.map((item) => (
                 <React.Fragment key={item.product.id}>
                   <div className='flex items-center gap-4'>
