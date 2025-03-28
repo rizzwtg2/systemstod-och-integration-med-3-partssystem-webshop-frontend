@@ -1,9 +1,9 @@
-import { IProduct } from "../models/IProduct";
+import { IProduct, IProductResponse } from "../models/IProduct";
 import { get, patch, remove, post } from "./baseService";
 
 const baseUrl = "http://localhost:3000/products";
 
-export const getAllProductsFromApi = async () => {
+export const getAllProductsFromApi = async (): Promise<IProduct[]> => {
   const response: IProduct[] = await get(baseUrl);
   return response;
 };
@@ -22,7 +22,8 @@ export const deleteProductById = async (id: number) => {
   await getAllProductsFromApi();
 };
 
-export const updateProductById = async (product: IProduct) => {
-  await patch(`${baseUrl}/${product.id}`, product);
+export const updateProductById = async (product: IProduct): Promise<IProductResponse> => {
+  const respone: IProductResponse = await patch(`${baseUrl}/${product.id}`, product);
   await getAllProductsFromApi();
+  return respone;
 };

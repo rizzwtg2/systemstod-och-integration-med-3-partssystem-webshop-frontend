@@ -77,8 +77,9 @@ export const useCustomers = () => {
 
   const createNewCustomer = async (customer: ICustomer) => {
     try {
-      await createCustomer(customer);
+      const response = await createCustomer(customer);
       await getAllCustomers();
+      return response;
     } catch (error) {
       handleError(error);
     }
@@ -86,8 +87,9 @@ export const useCustomers = () => {
 
   const deleteCustomer = async (id: number) => {
     try {
-      await deleteCustomerById(id);
+      const response = await deleteCustomerById(id);
       await getAllCustomers();
+      return response;
     } catch (error) {
       handleError(error);
     }
@@ -95,8 +97,9 @@ export const useCustomers = () => {
 
   const updateCustomer = async (customer: ICustomer) => {
     try {
-      await updateCustomerById(customer);
+      const response = await updateCustomerById(customer);
       await getAllCustomers();
+      return response;
     } catch (error) {
       handleError(error);
     }

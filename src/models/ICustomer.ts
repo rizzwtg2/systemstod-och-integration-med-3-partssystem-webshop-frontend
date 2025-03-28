@@ -12,3 +12,8 @@ export interface ICustomer extends RowDataPacket {
   country: string;
   created_at: Date | null;
 }
+
+export interface ICustomerResponse {
+  id: number;
+  message: string;
+}

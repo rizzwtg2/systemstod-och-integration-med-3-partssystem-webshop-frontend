@@ -2,10 +2,11 @@ import { RowDataPacket } from "mysql2";
 import { IOrderItem } from "./IOrderItem";
 
 export enum PaymentStatus {
-  Pending,
-  Completed,
-  Failed,
-  Refunded,
+  Paid = "Paid",
+  Unpaid = "Unpaid",
+  Completed = "Completed",
+  Failed = "Failed",
+  Refunded = "Refunded",
 }
 
 export enum OrderStatus {
@@ -35,4 +36,23 @@ export interface IOrder extends RowDataPacket {
   customer_country: string;
   customers_created_at: string;
   order_items: IOrderItem[];
+}
+
+export interface IOrderCreate {
+  customer_id: number;
+  payment_status: PaymentStatus;
+  payment_id: string;
+  order_status: OrderStatus;
+  order_items: IOrderItem[];
+}
+
+export interface IOrderResponse {
+  id?: number;
+  message: string;
+}
+
+export interface IOrderUpdate {
+  payment_status: PaymentStatus;
+  order_status: OrderStatus;
+  payment_id: string;
 }

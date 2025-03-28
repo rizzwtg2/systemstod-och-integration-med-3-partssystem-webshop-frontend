@@ -1,32 +1,35 @@
-import { ICustomer } from "../models/ICustomer";
+import { ICustomer, ICustomerResponse } from "../models/ICustomer";
 import { get, patch, remove, post } from "./baseService";
 
 const baseUrl = "http://localhost:3000/customers";
 
-export const getAllCustomersFromApi = async () => {
+export const getAllCustomersFromApi = async (): Promise<ICustomer[]> => {
   const response: ICustomer[] = await get(baseUrl);
   return response;
 };
-export const getCustomerByIdFromApi = async (id: number) => {
+export const getCustomerByIdFromApi = async (id: number): Promise<ICustomer> => {
   const response: ICustomer = await get(`${baseUrl}/${id}`);
   return response;
 };
-export const getCustomerByEmailFromApi = async (mail: string) => {
+export const getCustomerByEmailFromApi = async (mail: string): Promise<ICustomer> => {
   const response: ICustomer = await get(`${baseUrl}/email/${mail}`);
   return response;
 };
 
-export const createCustomer = async (customer: ICustomer) => {
-  await post(baseUrl, customer);
+export const createCustomer = async (customer: ICustomer): Promise<ICustomerResponse> => {
+  const response: ICustomerResponse = await post(baseUrl, customer);
   await getAllCustomersFromApi();
+  return response;
 };
 
-export const deleteCustomerById = async (id: number) => {
-  await remove(`${baseUrl}/${id}`);
+export const deleteCustomerById = async (id: number): Promise<ICustomerResponse> => {
+  const response: ICustomerResponse = await remove(`${baseUrl}/${id}`);
   await getAllCustomersFromApi();
+  return response;
 };
 
-export const updateCustomerById = async (customer: ICustomer) => {
-  await patch(`${baseUrl}/${customer.id}`, customer);
+export const updateCustomerById = async (customer: ICustomer): Promise<ICustomerResponse> => {
+  const response: ICustomerResponse = await patch(`${baseUrl}/${customer.id}`, customer);
   await getAllCustomersFromApi();
+  return response;
 };

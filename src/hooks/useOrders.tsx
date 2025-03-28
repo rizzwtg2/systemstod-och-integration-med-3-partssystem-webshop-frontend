@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
-import { IOrder } from "../models/IOrder";
-import { getAllOrders, getOrderById, deleteOrderById, updateOrderById } from "../services/orderServices";
+import { IOrder, IOrderCreate, IOrderResponse } from "../models/IOrder";
+import {
+  getAllOrders,
+  getOrderById,
+  deleteOrderById,
+  updateOrderById,
+  createOrder,
+  getOrderBySessionIdFromApi,
+} from "../services/orderServices";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -11,7 +18,6 @@ export const useOrders = () => {
 
     if (!isIntervalSet) {
       const intervalId = setInterval(() => {
-        console.log("Removing orders from local storage");
         localStorage.removeItem("orders");
         getOrders();
       }, 1000 * 10);
@@ -35,11 +41,19 @@ export const useOrders = () => {
     return await getOrderById(id);
   };
 
+  const getOrderBySessionId = async (id: string) => {
+    return await getOrderBySessionIdFromApi(id);
+  };
+
   const deleteOrder = async (id: number) => {
-    const newOrders = orders.filter((order) => order.id !== id);
-    await deleteOrderById(id);
-    setOrders(newOrders);
-    localStorage.setItem("orders", JSON.stringify(newOrders));
+    try {
+      const newOrders = orders.filter((order) => order.id !== id);
+      await deleteOrderById(id);
+      setOrders(newOrders);
+      localStorage.setItem("orders", JSON.stringify(newOrders));
+    } catch (error) {
+      console.error("Failed to delete order:", error);
+    }
   };
 
   const updateOrder = async (order: IOrder) => {
@@ -51,6 +65,10 @@ export const useOrders = () => {
       localStorage.setItem("orders", JSON.stringify(orders));
     }
   };
+  const createNewOrder = async (order: IOrderCreate): Promise<IOrderResponse> => {
+    const response = await createOrder(order);
+    return response;
+  };
 
-  return { orders, deleteOrder, updateOrder, getSingleOrder };
+  return { orders, deleteOrder, updateOrder, getSingleOrder, createNewOrder, getOrders, getOrderBySessionId };
 };

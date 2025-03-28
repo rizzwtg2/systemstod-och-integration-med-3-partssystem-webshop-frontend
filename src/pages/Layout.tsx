@@ -20,7 +20,7 @@ export const Layout = () => {
       </header>
       <main className='p-4 relative flex flex-col flex-1'>
         <Outlet />
-        {!isInCheckout && !isInCart && (
+        {!isInCheckout && !isInCart && cart.length > 0 && (
           <button
             onClick={() => nav("/cart")}
             className='absolute top-10 right-4 font-bold ring p-4 rounded-2xl flex gap-2 hover:ring-2'

@@ -4,13 +4,16 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 interface IAddCustomerFormProps {
   customer?: ICustomer;
+  setCustomer?: (customer: ICustomer) => void;
   setIsValidated?: (isValidated: boolean) => void;
 }
 
-export const AddCustomerForm = ({ customer, setIsValidated }: IAddCustomerFormProps) => {
-  const isInCheckout = location.pathname.includes("/checkout");
+export const AddCustomerForm = ({ customer, setIsValidated, setCustomer }: IAddCustomerFormProps) => {
+  const isInCheckout = location.pathname.includes("/cart");
   const { createNewCustomer, getCustomerByEmail } = useCustomers();
-  const [newCustomer, setNewCustomer] = useState<ICustomer>();
+  const [newCustomer, setNewCustomer] = useState<ICustomer>(
+    localStorage.getItem("newCustomer") ? JSON.parse(localStorage.getItem("newCustomer") as string) : {}
+  );
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newCustomer) {
@@ -19,6 +22,9 @@ export const AddCustomerForm = ({ customer, setIsValidated }: IAddCustomerFormPr
   };
   useEffect(() => {
     validateForm();
+    if (setCustomer) {
+      setCustomer(newCustomer as ICustomer);
+    }
   }, [newCustomer]);
 
   const validateForm = async () => {
@@ -46,7 +52,10 @@ export const AddCustomerForm = ({ customer, setIsValidated }: IAddCustomerFormPr
       );
 
       if (isValid) {
-        if (setIsValidated) setIsValidated(true);
+        if (setIsValidated) {
+          setIsValidated(true);
+          if (isInCheckout) createNewCustomer(newCustomer);
+        }
       } else {
         if (setIsValidated) setIsValidated(false);
       }
@@ -54,17 +63,12 @@ export const AddCustomerForm = ({ customer, setIsValidated }: IAddCustomerFormPr
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewCustomer({
-      ...(newCustomer as ICustomer),
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    setNewCustomer((prevCustomer) => {
+      const updatedCustomer = { ...prevCustomer, [name]: value };
+      localStorage.setItem("newCustomer", JSON.stringify(updatedCustomer));
+      return updatedCustomer;
     });
-    localStorage.setItem(
-      "formdata",
-      JSON.stringify({
-        ...(newCustomer as ICustomer),
-        [e.target.name]: e.target.value,
-      })
-    );
   };
 
   return (

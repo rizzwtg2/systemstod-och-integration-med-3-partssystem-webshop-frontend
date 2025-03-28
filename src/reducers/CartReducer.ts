@@ -2,7 +2,7 @@ import { CartItem } from "../models/CartItem";
 
 export interface ICartAction {
   type: CartActionType;
-  payload: CartItem;
+  payload?: CartItem;
 }
 
 export enum CartActionType {
@@ -23,13 +23,15 @@ export const CartReducer = (cart: CartItem[], action: ICartAction) => {
         item.product.id === payload.product.id ? { ...item, quantity: item.quantity + payload.quantity } : item
       );
     }
-    // case CartActionType.REMOVE_ITEM:
+    case CartActionType.REMOVE_ITEM:
+      return cart.filter((item) => item.product.id !== payload.product.id);
 
     case CartActionType.CHANGE_QUANTITY:
       return cart.map((item) =>
         item.product.id === payload.product.id ? { ...item, quantity: payload.quantity } : item
       );
-    // case CartActionType.CLEAR_CART:
+    case CartActionType.CLEAR_CART:
+      return [];
     default:
       return cart;
   }

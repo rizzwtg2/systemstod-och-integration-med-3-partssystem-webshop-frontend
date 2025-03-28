@@ -12,6 +12,7 @@ import { OrderConfirmation } from "./components/OrderConfirmation";
 import { Layout } from "./pages/Layout";
 import { About } from "./pages/About";
 import { Cart } from "./components/Cart";
+import { AdminLanding } from "./components/AdminLanding";
 
 export const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
-        path: "order-confirmation",
+        path: "order-confirmation/:session_id",
         element: <OrderConfirmation />,
       },
     ],
@@ -54,7 +55,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <HomePage />,
+        element: <AdminLanding />,
       },
       {
         path: "products",

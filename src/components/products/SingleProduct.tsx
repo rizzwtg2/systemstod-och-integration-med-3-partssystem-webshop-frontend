@@ -10,6 +10,7 @@ import CartContext from "../../contexts/CartContext";
 
 interface IProps {
   product?: IProduct;
+  isInAdmin?: boolean;
 }
 
 export const SingleProduct = (props: IProps) => {
@@ -51,20 +52,22 @@ export const SingleProduct = (props: IProps) => {
         <p>Price: {product?.price} kr</p>
         <p>In stock: {product?.stock} </p>
         <p>Category: {product?.category} </p>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleAddToCart(product, 1);
-          }}
-          className='mx-auto cursor-pointer p-2 flex items-center justify-center ring rounded hover:ring-2 '
-        >
-          Add to
-          <svg width='24px' height='24px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-            <circle cx='16.5' cy='18.5' r='1.5' />
-            <circle cx='9.5' cy='18.5' r='1.5' />
-            <path d='M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z' />
-          </svg>
-        </button>
+        {!isInAdmin && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleAddToCart(product, 1);
+            }}
+            className='mx-auto cursor-pointer p-2 flex items-center justify-center ring rounded hover:ring-2 '
+          >
+            Add to
+            <svg width='24px' height='24px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+              <circle cx='16.5' cy='18.5' r='1.5' />
+              <circle cx='9.5' cy='18.5' r='1.5' />
+              <path d='M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z' />
+            </svg>
+          </button>
+        )}
 
         {id && isInAdmin && (
           <button

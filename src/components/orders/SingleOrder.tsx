@@ -37,7 +37,7 @@ export const SingleOrder = () => {
               onClick={() => {
                 if (orderDetails.id) {
                   deleteOrder(orderDetails.id);
-                  nav("/orders");
+                  nav("/admin/orders");
                 }
               }}
             >
@@ -60,7 +60,8 @@ export const SingleOrder = () => {
             <div className='flex flex-col justify-center border border-gray-400 rounded shadow-xl p-4 gap-2 '>
               <h2 className='text-2xl font-semibold'>OrderDetails</h2>
               <p className=''>Order status: {orderDetails.order_status}</p>
-              <p className=''>Payment Method: {orderDetails.payment_status}</p>
+              <p className=''>Payment Status: {orderDetails.payment_status}</p>
+              <p className=''>Payment Id: {orderDetails.payment_id}</p>
               <p className=''>Created at: {new Date(orderDetails.created_at).toDateString()}</p>
               <p className='font-bold'>Total Amount: ${orderDetails.total_price}</p>
             </div>

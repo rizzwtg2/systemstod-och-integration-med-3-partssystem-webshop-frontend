@@ -16,7 +16,7 @@ export const ShowAllProducts = ({ isInAdmin }: IProps) => {
         {products.map((product: IProduct) => (
           <div key={product.id} className='relative flex flex-col ring-2 ring-gray-300 gap-2 rounded hover:ring-4 '>
             <Link to={`${linkUrl}/${product.id}`}>
-              <SingleProduct product={product} />
+              <SingleProduct product={product} isInAdmin={isInAdmin} />
             </Link>
 
             {isInAdmin && (

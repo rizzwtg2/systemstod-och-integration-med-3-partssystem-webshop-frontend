@@ -45,7 +45,7 @@ export const AllOrders = () => {
                   onChange={(e) => order.id !== null && handleStatusUpdate(order.id, e.target.value as OrderStatus)}
                 >
                   {orderStatus.map((orderStatus) => (
-                    <option key={orderStatus} value={orderStatus}>
+                    <option key={orderStatus} defaultValue={orderStatus}>
                       {orderStatus}
                     </option>
                   ))}
