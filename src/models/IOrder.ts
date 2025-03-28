@@ -16,6 +16,7 @@ export enum OrderStatus {
   Paid = "Paid",
   Delivered = "Delivered",
   Refunded = "Refunded",
+  Received = "Received",
 }
 
 export interface IOrder extends RowDataPacket {

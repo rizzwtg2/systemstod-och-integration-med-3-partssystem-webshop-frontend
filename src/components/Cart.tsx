@@ -112,9 +112,6 @@ export const Cart = () => {
         const { id } = response;
         if (id) setCustomer(newCustomer);
       }
-    } else {
-      console.error("Failed to create a new customer.");
-      return;
     }
   };
 

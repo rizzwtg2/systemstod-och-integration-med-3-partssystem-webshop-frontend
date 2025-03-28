@@ -27,6 +27,8 @@ export const useProducts = () => {
   };
 
   useEffect(() => {
+    getAllProducts();
+
     if (!isIntervalSet) {
       const intervalId = setInterval(() => {
         console.log("Removing products from local storage");
