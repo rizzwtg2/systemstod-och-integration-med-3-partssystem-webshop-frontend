@@ -15,9 +15,8 @@ export const OrderConfirmation = () => {
   const getOrder = async (sessionId: string) => {
     try {
       const response = await getOrderBySessionId(sessionId);
-      setOrderConfirmation(response);
+      await setOrderConfirmation(response);
       console.log("Order confirmation:", response);
-      console.log("oorder", orderConfirmation);
     } catch (error) {
       console.error("Error fetching order by session ID:", error);
     }

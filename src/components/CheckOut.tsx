@@ -15,7 +15,8 @@ const useCheckoutPayload = () => {
 export const Checkout = () => {
   const payload = useCheckoutPayload();
   const fetchClientSecret = useCallback(() => {
-    return fetch("http://localhost:3000/stripe/create-checkout-session", {
+    return fetch("https://e-shop-backend-new-hazel.vercel.app/stripe/create-checkout-session", {
+      // return fetch("http://localhost:3000/stripe/create-checkout-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ payload }),

@@ -15,6 +15,7 @@ interface IProps {
 
 export const SingleProduct = (props: IProps) => {
   const isInAdmin = useLocation().pathname.includes("/admin/products");
+  const isInAllProducts = useLocation().pathname.includes("/products");
   const { deleteProduct, getProductById, updateProduct } = useProducts();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<IProduct>(props.product as IProduct);
@@ -47,11 +48,11 @@ export const SingleProduct = (props: IProps) => {
         <h3 className='p-2 text-2xl font-semibold'>{product?.name}</h3>
         <img src={product?.image} alt={product?.name} className='mx-auto object-cover max-w-full size-52 relative' />
 
-        <p>Decsription: {product?.description}</p>
+        <p>Category: {product?.category} </p>
+        <p className={isInAllProducts ? "line-clamp-3" : ""}>Decsription: {product?.description}</p>
 
         <p>Price: {product?.price} kr</p>
         <p>In stock: {product?.stock} </p>
-        <p>Category: {product?.category} </p>
         {!isInAdmin && (
           <button
             onClick={(e) => {

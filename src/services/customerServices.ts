@@ -1,7 +1,8 @@
 import { ICustomer, ICustomerResponse } from "../models/ICustomer";
 import { get, patch, remove, post } from "./baseService";
 
-const baseUrl = "http://localhost:3000/customers";
+// const baseUrl = "http://localhost:3000/customers";
+const baseUrl = "https://e-shop-backend-new-hazel.vercel.app/customers";
 
 export const getAllCustomersFromApi = async (): Promise<ICustomer[]> => {
   const response: ICustomer[] = await get(baseUrl);

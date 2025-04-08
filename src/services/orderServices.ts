@@ -1,7 +1,8 @@
 import { IOrder, IOrderCreate, IOrderResponse } from "../models/IOrder";
 import { get, remove, patch, post } from "./baseService";
 
-const baseUrl = "http://localhost:3000/orders";
+// const baseUrl = "http://localhost:3000/orders";
+const baseUrl = "https://e-shop-backend-new-hazel.vercel.app/orders";
 
 export const getAllOrders = async (): Promise<IOrder[]> => {
   return await get<IOrder[]>(baseUrl);

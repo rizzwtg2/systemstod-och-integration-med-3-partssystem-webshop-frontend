@@ -1,7 +1,8 @@
 import { IProduct, IProductResponse } from "../models/IProduct";
 import { get, patch, remove, post } from "./baseService";
 
-const baseUrl = "http://localhost:3000/products";
+// const baseUrl = "http://localhost:3000/products";
+const baseUrl = "https://e-shop-backend-new-hazel.vercel.app/products";
 
 export const getAllProductsFromApi = async (): Promise<IProduct[]> => {
   const response: IProduct[] = await get(baseUrl);
