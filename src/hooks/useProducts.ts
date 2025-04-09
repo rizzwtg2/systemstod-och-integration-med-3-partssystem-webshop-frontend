@@ -34,7 +34,7 @@ export const useProducts = () => {
         console.log("Removing products from local storage");
         localStorage.removeItem("products");
         getAllProducts();
-      }, 1000 * 10);
+      }, 1000 * 60); // 60 seconds
       setIsIntervalSet(true);
 
       return () => clearInterval(intervalId);
